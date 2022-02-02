@@ -3,7 +3,7 @@
 #include<conio.h>
 #define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0)
 using namespace std;
-long long sc;
+long long sc,hsc;
 int Map[5][5];
 void HideCurSor(void){
 	CONSOLE_CURSOR_INFO info={1,0};
@@ -219,6 +219,24 @@ void getnew(int pos,int num) {
 	}
 	Map[pos/4+1][pos%4+1]=num;
 }
+void readsave() {
+	freopen("save","r",stdin);
+	scanf("%lld%lld",&hsc,&sc);
+	for(int i=1;i<=4;++i)
+		for(int j=1;j<=4;++j)
+			scanf("%d",&Map[i][j]);
+	fclose(stdin);
+	freopen("CON","r",stdin);
+}
+void writesave() {
+	freopen("save","w",stdout);
+	printf("%lld %lld ",hsc,sc);
+	for(int i=1;i<=4;++i)
+		for(int j=1;j<=4;++j)
+			printf("%d ",Map[i][j]);
+	fclose(stdout);
+	freopen("CON","w",stdout);
+}
 void run() {
 	srand(time(0));
 	int pos=rand()%16;
@@ -227,9 +245,10 @@ void run() {
 	pos=rand()%16;
 	num=4-(bool)(rand()%10)*2;
 	getnew(pos,num);
+	readsave();
 	while(check_up()||check_down()||check_left()||check_right()) {
 		HideCurSor();
-		draw();write();SetPos2(40,5);printf("score:%lld",sc);
+		draw();write();SetPos2(40,5);printf("        score:%lld",sc);SetPos2(40,4);printf("highest score:%lld",hsc);
 		for(int i=1;i<=4;++i) {
 			for(int j=1;j<=4;++j) {
 				if(Map[i][j]>=2048) {
@@ -263,6 +282,8 @@ void run() {
 		pos=rand()%16;
 		num=4-(bool)(rand()%10)*2;
 		getnew(pos,num);
+		hsc=max(hsc,sc);
+		writesave();
 	}
 	draw();write();SetPos2(40,5);printf("score:%lld",sc);
 	SetPos2(1,19);
