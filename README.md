@@ -31,4 +31,4 @@ Update data:
 
 V1.0: Game released.
 
-V1.1:Added save and highest score.
+V1.1: Added save and highest score.
