@@ -5,6 +5,7 @@
 using namespace std;
 long long sc,hsc;
 int Map[5][5];
+bool bl; 
 void HideCurSor(void){
 	CONSOLE_CURSOR_INFO info={1,0};
 	HANDLE Out=GetStdHandle(STD_OUTPUT_HANDLE);
@@ -224,7 +225,7 @@ void readsave() {
 	scanf("%lld%lld",&hsc,&sc);
 	for(int i=1;i<=4;++i)
 		for(int j=1;j<=4;++j)
-			scanf("%d",&Map[i][j]);
+			scanf("%d",&Map[i][j]),bl|=Map[i][j];
 	fclose(stdin);
 	freopen("CON","r",stdin);
 }
@@ -239,13 +240,16 @@ void writesave() {
 }
 void run() {
 	srand(time(0));
-	int pos=rand()%16;
-	int num=4-(bool)(rand()%10)*2;
-	getnew(pos,num);
-	pos=rand()%16;
-	num=4-(bool)(rand()%10)*2;
-	getnew(pos,num);
 	readsave();
+	int pos,num;
+	if(!bl) {
+		pos=rand()%16;
+		num=4-(bool)(rand()%10)*2;
+		getnew(pos,num);
+		pos=rand()%16;
+		num=4-(bool)(rand()%10)*2;
+		getnew(pos,num);
+	}
 	while(check_up()||check_down()||check_left()||check_right()) {
 		HideCurSor();
 		draw();write();SetPos2(40,5);printf("        score:%lld",sc);SetPos2(40,4);printf("highest score:%lld",hsc);
@@ -289,6 +293,9 @@ void run() {
 	SetPos2(1,19);
 	printf("            GAME OVER!\n");
 	printf("    Press Enter or Esc to exit");
+	memset(Map,0,sizeof(Map));
+	sc=0;
+	writesave();
 	while(!KEY_DOWN(VK_RETURN)&&!KEY_DOWN(VK_ESCAPE)) HideCurSor();
 	return;
 }

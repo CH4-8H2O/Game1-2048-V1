@@ -8,14 +8,15 @@ Use arrow keys to move.
 
 Something new:
 
-- Save
-- Highest score
+- Fixed some small bugs
 
 ---
 
 Something already added:
 
 - Score
+- Save
+- Highest score
 
 ---
 
