@@ -5,7 +5,7 @@
 using namespace std;
 long long sc,hsc;
 int Map[5][5];
-bool bl; 
+bool bl;
 void HideCurSor(void){
 	CONSOLE_CURSOR_INFO info={1,0};
 	HANDLE Out=GetStdHandle(STD_OUTPUT_HANDLE);
@@ -289,7 +289,7 @@ void run() {
 		hsc=max(hsc,sc);
 		writesave();
 	}
-	draw();write();SetPos2(40,5);printf("score:%lld",sc);
+	draw();write();SetPos2(40,5);printf("        score:%lld",sc);SetPos2(40,4);printf("highest score:%lld",hsc);
 	SetPos2(1,19);
 	printf("            GAME OVER!\n");
 	printf("    Press Enter or Esc to exit");
